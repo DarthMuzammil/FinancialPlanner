@@ -65,4 +65,4 @@ total_net_worth =  total_equity
 # Calculate total net worth in inflation-adjusted terms
 total_net_worth_real = total_net_worth / ((1 + inflation_rate) ** 10)
 
-print(total_net_worth, total_net_worth_real)
+print(round(total_net_worth,2), round(total_net_worth_real,2))

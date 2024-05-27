@@ -1,0 +1,44 @@
+ --------------------------------------
+|             User                     |                                
+ --------------------------------------
+| - id: int                           |
+| - name: string                      |
+| - email: string                     |
+| - password: string                  |
+
+
+ --------------------------------------
+|       FinancialProfile              |
+ --------------------------------------
+| - id: int 
+| - user_id : int (FK)
+| - initial_salary: decimal           |
+| - fixed_expenses: decimal           |
+| - savings_rate: decimal             |
+| - investment_increase_rate: decimal |
+| - yearly_increment: decimal         |
+| - additional_increment: decimal     |
+| - inflation_rate: decimal           |
+| - investment_horizon: int           |
+| - equity_growth: decimal            |
+| - emergency_fund_percentage: decimal|
+| - equity_percentage: decimal        |
+ --------------------------------------
+
+--------------------------------------
+| InvestmentProjection               |
+ --------------------------------------
+| - id: int                           |
+| - fin_id : int (FK)                 |
+|  - usr_id : int (FK)                |   
+| - year: int                         |
+| - salary: decimal                   |
+| - real_salary: decimal              |
+| - disposable_income: decimal        |
+| - real_disposable_income: decimal   |
+| - savings: decimal                  |
+| - emergency_fund: decimal           |
+| - equity_investment: decimal        |
+| - total_equity: decimal             |
+| - total_net_worth: decimal          |
+| - total_net_worth_real: decimal     |
