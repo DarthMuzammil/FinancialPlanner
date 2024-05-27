@@ -4,8 +4,8 @@
 An application that will help the user visualise their future networth, depending on various variables such as:
 1. Current Salary
 2. Portfolio
-3. Salary Hike cycles
-4. Promition Job Switches
+3. Salary Hike percentage
+4. Promotion / Job Switches
 5. Expenses
 Given values for the above things, the user should be able to see their networth, at age X.
 
