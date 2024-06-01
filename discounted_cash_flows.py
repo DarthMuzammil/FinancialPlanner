@@ -9,8 +9,7 @@ in making capital budgeting or operating expenditures decisions.
 # Import necessary libraries
 import numpy as np
 
-# Function to calculate present value of future cash flows
-def discounted_cash_flow(cash_flows, discount_rate):
+def discounted_cash_flow(cash_flows: list[float], discount_rate: float) -> float:
     """
     Calculate the present value of a series of cash flows given a discount rate.
 
@@ -18,13 +17,12 @@ def discounted_cash_flow(cash_flows, discount_rate):
     :param discount_rate: Discount rate (float)
     :return: Present value (float)
     """
-    present_value = 0
-    for t, cash_flow in enumerate(cash_flows, start=1):
-        present_value += cash_flow / ((1 + discount_rate) ** t)
+    cash_flows = np.array(cash_flows)
+    periods = np.arange(1, len(cash_flows) + 1)
+    present_value = np.sum(cash_flows / (1 + discount_rate) ** periods)
     return present_value
 
-# Function to project future cash flows
-def project_future_cash_flows(initial_cash_flows, growth_rate, periods):
+def project_future_cash_flows(initial_cash_flows: list[float], growth_rate: float, periods: int) -> list[float]:
     """
     Project future cash flows based on initial cash flows and growth rate.
 
@@ -41,21 +39,63 @@ def project_future_cash_flows(initial_cash_flows, growth_rate, periods):
         last_cash_flow = next_cash_flow
     return projected_cash_flows
 
-# Main function to run the program
-def main():
-    # Get inputs from the user
-    investments = int(input("Enter the number of investments in your portfolio: "))
+def get_user_inputs() -> tuple[dict[str, tuple[list[float], float, int]], float]:
+    """
+    Get investment portfolio and discount rate from user input.
+
+    :return: Tuple containing the portfolio dictionary and discount rate
+    """
     portfolio = {}
+    while True:
+        try:
+            investments = int(input("Enter the number of investments in your portfolio: "))
+            if investments <= 0:
+                raise ValueError
+            break
+        except ValueError:
+            print("Please enter a valid number of investments.")
 
     for i in range(investments):
-        investment_name = input(f"\nEnter the name of investment {i+1}: ")
-        cash_flows = input(f"Enter the initial cash flows for {investment_name} separated by commas: ")
-        cash_flows = list(map(float, cash_flows.split(',')))
-        growth_rate = float(input(f"Enter the annual growth rate for {investment_name} (as a decimal): "))
-        periods = int(input(f"Enter the number of periods to project for {investment_name}: "))
+        investment_name = input(f"\nEnter the name of investment {i + 1}: ")
+        
+        while True:
+            try:
+                cash_flows = input(f"Enter the initial cash flows for {investment_name} separated by commas: ")
+                cash_flows = list(map(float, cash_flows.split(',')))
+                break
+            except ValueError:
+                print("Please enter valid cash flows separated by commas.")
+
+        while True:
+            try:
+                growth_rate = float(input(f"Enter the annual growth rate for {investment_name} (as a decimal): "))
+                break
+            except ValueError:
+                print("Please enter a valid growth rate.")
+
+        while True:
+            try:
+                periods = int(input(f"Enter the number of periods to project for {investment_name}: "))
+                if periods < 0:
+                    raise ValueError
+                break
+            except ValueError:
+                print("Please enter a valid number of periods.")
+
         portfolio[investment_name] = (cash_flows, growth_rate, periods)
 
-    discount_rate = float(input("\nEnter the discount rate (as a decimal): "))
+    while True:
+        try:
+            discount_rate = float(input("\nEnter the discount rate (as a decimal): "))
+            break
+        except ValueError:
+            print("Please enter a valid discount rate.")
+
+    return portfolio, discount_rate
+
+def main():
+    # Get inputs from the user
+    portfolio, discount_rate = get_user_inputs()
 
     # Calculate the present value for each investment in the portfolio
     portfolio_values = {}
@@ -74,6 +114,5 @@ def main():
 
     print(f"\nTotal Portfolio Value: ${total_value:.2f}")
 
-# Run the main function
 if __name__ == "__main__":
     main()
